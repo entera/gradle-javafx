@@ -1,6 +1,6 @@
-package org.github.hastebrot.gradle.javafx.deploy
+package com.github.hastebrot.gradle.javafxDeployPlugin
 
-import org.github.hastebrot.gradle.javafx.deploy.task.JavafxDeployTask
+import com.github.hastebrot.gradle.javafxDeployPlugin.task.JavafxDeployTask
 import org.gradle.api.Project
 import org.gradle.testfixtures.ProjectBuilder
 import org.junit.Before
@@ -24,7 +24,7 @@ class JavafxDeployPluginTest {
     @Before
     public void setup() {
         project = ProjectBuilder.builder().build()
-        project.apply plugin: "javafx.deploy.plugin"
+        project.apply plugin: "com.github.hastebrot.gradle.javafxDeployPlugin"
     }
 
     //---------------------------------------------------------------------------------------------

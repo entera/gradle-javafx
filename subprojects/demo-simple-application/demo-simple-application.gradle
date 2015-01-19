@@ -4,6 +4,9 @@ buildscript {
     }
 }
 
-if (!project.plugins.findPlugin(org.github.hastebrot.gradle.javafx.deploy.JavafxDeployPlugin)) {
-    project.apply(plugin: org.github.hastebrot.gradle.javafx.deploy.JavafxDeployPlugin)
+project.apply { configAction ->
+    def javafxDeployPlugin = "com.github.hastebrot.gradle.javafxDeployPlugin"
+    if (!project.plugins.findPlugin(javafxDeployPlugin)) {
+        configAction.plugin(javafxDeployPlugin)
+    }
 }

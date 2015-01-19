@@ -1,6 +1,6 @@
-package org.github.hastebrot.gradle.javafx.deploy
+package com.github.hastebrot.gradle.javafxDeployPlugin
 
-import org.github.hastebrot.gradle.javafx.deploy.task.JavafxDeployTask
+import com.github.hastebrot.gradle.javafxDeployPlugin.task.JavafxDeployTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 

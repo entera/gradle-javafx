@@ -1,4 +1,4 @@
-package org.github.hastebrot.gradle.javafx.deploy.task
+package com.github.hastebrot.gradle.javafxDeployPlugin.task
 
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction

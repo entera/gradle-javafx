@@ -7,8 +7,11 @@ class JavafxDeployPlugin implements Plugin<Project> {
 
     void apply(Project project) {
         project.task("hello") << {
-            println "Hello from JavafxDeployPlugin!"
+            println "Hello from ${this.class.simpleName}!"
         }
+
+        project.extensions.create("javafx", JavafxDeployExtension)
+        project.tasks.replace("greet", GreetTask)
     }
 
 }

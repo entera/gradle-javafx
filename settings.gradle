@@ -1,4 +1,5 @@
 include "subprojects/javafx-deploy-plugin"
+include "subprojects/demo-simple-application"
 
 rootProject.name = "gradle-javafx"
 rootProject.children.each { project ->

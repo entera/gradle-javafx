@@ -1,1 +1,9 @@
-apply from: "gradle/javafx.gradle"
+buildscript {
+    dependencies {
+        classpath project(":javafx-deploy-plugin")
+    }
+}
+
+if (!project.plugins.findPlugin(org.github.hastebrot.gradle.javafx.deploy.JavafxDeployPlugin)) {
+    project.apply(plugin: org.github.hastebrot.gradle.javafx.deploy.JavafxDeployPlugin)
+}

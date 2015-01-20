@@ -1,23 +1,23 @@
 task wrapper(type: Wrapper) {
-  gradleVersion = "2.2.1"
+    gradleVersion = "2.2.1"
 }
 
 task versions << {
-  println "Gradle version: " + project.gradle.gradleVersion
-  println "Groovy version: " + GroovySystem.version
+    println "Gradle version: " + project.gradle.gradleVersion
+    println "Groovy version: " + GroovySystem.version
 }
 
 subprojects {
-  apply plugin: "java"
+    apply plugin: "java"
 
-  task createSourceSets << { Task task ->
-    task.project.sourceSets*.allSource.srcDirs*.each { it.mkdirs() }
-    task.project.sourceSets*.resources.srcDirs*.each { it.mkdirs() }
-  }
-
-  task printConfigNames << {
-    for (configuration in configurations) {
-      println configuration.name
+    task createSourceSets << { Task task ->
+        task.project.sourceSets*.allSource.srcDirs*.each { it.mkdirs() }
+        task.project.sourceSets*.resources.srcDirs*.each { it.mkdirs() }
     }
-  }
+
+    task printConfigNames << {
+        for (configuration in configurations) {
+            println configuration.name
+        }
+    }
 }

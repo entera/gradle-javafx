@@ -7,7 +7,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-public class SimpleApplication extends Application {
+public class DemoSimpleApplication extends Application {
 
     public static void main(String[] args) {
         launch(args);

@@ -34,7 +34,7 @@ class JavafxDeployPluginTest {
     @Test
     public void should_register_tasks() {
         // expect:
-        assertThat(project.tasks.javafxDeploy, instanceOf(JavafxDeployTask))
+        assertThat(project.tasks."javafx.deploy", instanceOf(JavafxDeployTask))
     }
 
     @Test

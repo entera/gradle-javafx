@@ -6,6 +6,13 @@ repositories {
 }
 
 dependencies {
+    // This provides `org.gradle.api.*`.
     compile gradleApi()
-    compile localGroovy()
+
+    // Gradle puts the Java Runtime [sic!] it uses into the platform-independent property
+    // `java.home`. This provides `com.oracle.tools.packager.*` and `javafx.*`.
+    def gradleJavaRuntimeDir = new File(System.properties["java.home"])
+    compile files("${gradleJavaRuntimeDir}/../lib/ant-javafx.jar") // JDK
+    compile files("${gradleJavaRuntimeDir}/lib/jfxrt.jar") // JRE7
+    compile files("${gradleJavaRuntimeDir}/lib/ext/jfxrt.jar") // JRE8
 }

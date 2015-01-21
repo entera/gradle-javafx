@@ -1,8 +1,8 @@
-package com.github.hastebrot.gradle.javafxDeployPlugin
+package com.github.hastebrot.gradle.javafxPackagerPlugin
 
-import com.github.hastebrot.gradle.javafxDeployPlugin.domain.JavafxConfig
-import com.github.hastebrot.gradle.javafxDeployPlugin.task.DeployTask
-import com.github.hastebrot.gradle.javafxDeployPlugin.task.CreateJarTask
+import com.github.hastebrot.gradle.javafxPackagerPlugin.domain.JavafxConfig
+import com.github.hastebrot.gradle.javafxPackagerPlugin.task.CreateJarTask
+import com.github.hastebrot.gradle.javafxPackagerPlugin.task.DeployTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPlugin
@@ -39,7 +39,6 @@ class JavafxPlugin implements Plugin<Project> {
     // PRIVATE METHODS.
     //---------------------------------------------------------------------------------------------
 
-
     private void registerExtensions() {
         this.project.extensions.create(JAVAFX_CONFIG, JavafxConfig)
     }
@@ -56,6 +55,10 @@ class JavafxPlugin implements Plugin<Project> {
             }
         }
 
+        //project.task([type: CreateJarTask, dependsOn: "jar"], CREATE_JAR_TASK) {
+        //
+        //}
+
         def createJarTask = project.tasks.replace(CREATE_JAR_TASK, CreateJarTask)
 
         project.afterEvaluate {
@@ -69,9 +72,12 @@ class JavafxPlugin implements Plugin<Project> {
             //createJarTask.jarFile = project.file(project.fileTree(libsDir).singleFile)
             //createJarTask.classpath = project.files(project.fileTree(libsDir).files)
 
-            def javaJarTask = project.tasks.getByName(mainSourceSet.jarTaskName)
-            createJarTask.jarFile = javaJarTask.archivePath
-            createJarTask.classpath = mainSourceSet.compileClasspath
+            project.configure(createJarTask) {
+                def javaJarTask = project.tasks.getByName(mainSourceSet.jarTaskName)
+                jarFile = javaJarTask.archivePath
+                classpath = mainSourceSet.compileClasspath
+
+            }
         }
 
         def deployTask = this.project.tasks.replace(DEPLOY_TASK, DeployTask)

@@ -1,5 +1,5 @@
 include "subprojects/demo-simple-application"
-include "subprojects/javafx-deploy-plugin"
+include "subprojects/javafx-packager-plugin"
 
 rootProject.name = "gradle-javafx"
 

@@ -1,18 +1,13 @@
 buildscript {
     dependencies {
-        classpath project(":javafx-deploy-plugin")
+        classpath project(":javafx-packager-plugin")
     }
 }
 
-if (project.gradle.startParameter.projectDir?.name != "javafx-deploy-plugin") {
-    //project.apply { configAction ->
-    //    def javafxDeployPlugin = "com.github.hastebrot.gradle.javafxDeployPlugin"
-    //    if (!project.plugins.findPlugin(javafxDeployPlugin)) {
-    //        configAction.plugin(javafxDeployPlugin)
-    //    }
-    //}
+if (project.gradle.startParameter.taskNames.empty ||
+    project.gradle.startParameter.projectDir == project.projectDir) {
 
-    apply plugin: "com.github.hastebrot.gradle.javafxDeployPlugin"
+    apply plugin: "javafx-packager-plugin"
 
     javafx {
         mainClass "com.github.hastebrot.gradle.demoSimpleApplication.DemoSimpleApplication"

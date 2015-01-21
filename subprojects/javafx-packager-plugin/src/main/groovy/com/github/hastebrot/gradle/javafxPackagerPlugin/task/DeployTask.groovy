@@ -1,4 +1,4 @@
-package com.github.hastebrot.gradle.javafxDeployPlugin.task
+package com.github.hastebrot.gradle.javafxPackagerPlugin.task
 
 import com.oracle.tools.packager.Bundler
 import com.oracle.tools.packager.Bundlers

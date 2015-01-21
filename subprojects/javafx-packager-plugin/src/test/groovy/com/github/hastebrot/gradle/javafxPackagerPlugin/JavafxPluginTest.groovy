@@ -1,8 +1,8 @@
-package com.github.hastebrot.gradle.javafxDeployPlugin
+package com.github.hastebrot.gradle.javafxPackagerPlugin
 
-import com.github.hastebrot.gradle.javafxDeployPlugin.domain.JavafxConfig
-import com.github.hastebrot.gradle.javafxDeployPlugin.task.DeployTask
-import com.github.hastebrot.gradle.javafxDeployPlugin.task.CreateJarTask
+import com.github.hastebrot.gradle.javafxPackagerPlugin.domain.JavafxConfig
+import com.github.hastebrot.gradle.javafxPackagerPlugin.task.DeployTask
+import com.github.hastebrot.gradle.javafxPackagerPlugin.task.CreateJarTask
 import org.gradle.api.Project
 import org.gradle.testfixtures.ProjectBuilder
 import org.junit.Before
@@ -25,8 +25,10 @@ class JavafxPluginTest {
 
     @Before
     public void setup() {
-        project = ProjectBuilder.builder().build()
-        project.apply plugin: "com.github.hastebrot.gradle.javafxDeployPlugin"
+        def builder = ProjectBuilder.builder()
+        //builder.withProjectDir()
+        project = builder.build()
+        project.apply(plugin: "com.github.hastebrot.gradle.javafxDeployPlugin")
     }
 
     //---------------------------------------------------------------------------------------------

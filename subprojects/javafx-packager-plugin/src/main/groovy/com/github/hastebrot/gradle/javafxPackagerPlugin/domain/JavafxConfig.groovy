@@ -1,4 +1,4 @@
-package com.github.hastebrot.gradle.javafxDeployPlugin.domain
+package com.github.hastebrot.gradle.javafxPackagerPlugin.domain
 
 class JavafxConfig {
 

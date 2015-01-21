@@ -1,4 +1,4 @@
-package com.github.hastebrot.gradle.javafxDeployPlugin.task
+package com.github.hastebrot.gradle.javafxPackagerPlugin.task
 
 import com.sun.javafx.tools.packager.CreateJarParams
 import com.sun.javafx.tools.packager.PackagerLib

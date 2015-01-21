@@ -1,11 +1,13 @@
-package com.github.hastebrot.gradle.javafxDeployPlugin
+package com.github.hastebrot.gradle.javafxDeployPlugin.domain
 
-class JavafxDeployExtension {
+class JavafxConfig {
 
     //---------------------------------------------------------------------------------------------
     // FIELDS.
     //---------------------------------------------------------------------------------------------
 
     String mainClass
+
+    String sourceSet = "main"
 
 }

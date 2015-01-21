@@ -4,13 +4,15 @@ buildscript {
     }
 }
 
-if (project.gradle.startParameter.projectDir.name != "javafx-deploy-plugin") {
-    project.apply { configAction ->
-        def javafxDeployPlugin = "com.github.hastebrot.gradle.javafxDeployPlugin"
-        if (!project.plugins.findPlugin(javafxDeployPlugin)) {
-            configAction.plugin(javafxDeployPlugin)
-        }
-    }
+if (project.gradle.startParameter.projectDir?.name != "javafx-deploy-plugin") {
+    //project.apply { configAction ->
+    //    def javafxDeployPlugin = "com.github.hastebrot.gradle.javafxDeployPlugin"
+    //    if (!project.plugins.findPlugin(javafxDeployPlugin)) {
+    //        configAction.plugin(javafxDeployPlugin)
+    //    }
+    //}
+
+    apply plugin: "com.github.hastebrot.gradle.javafxDeployPlugin"
 
     javafx {
         mainClass "com.github.hastebrot.gradle.demoSimpleApplication.DemoSimpleApplication"

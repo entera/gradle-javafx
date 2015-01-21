@@ -30,7 +30,7 @@ class DeployTask extends ConventionTask {
 
     @TaskAction
     void deploy() {
-        println "mainClass: ${this.mainClass}"
+        //println "mainClass: ${this.mainClass}"
 
         File libsDir = new File(project.buildDir, "libs")
 
@@ -38,14 +38,12 @@ class DeployTask extends ConventionTask {
         project.delete(appLayoutDir)
         appLayoutDir.mkdirs()
 
-        println project.fileTree(libsDir).files
+        //println project.fileTree(libsDir).files
 
         project.copy {
             from project.fileTree(libsDir).files
             into appLayoutDir
         }
-
-
 
         def outputDir = this.distributionsRootDir
         def bundlers = Bundlers.createBundlersInstance()
@@ -62,7 +60,7 @@ class DeployTask extends ConventionTask {
                 params[CLASSPATH.ID] = new RelativeFileSet(appLayoutDir,
                     project.fileTree(appLayoutDir).files).includedFiles.join(' ')
 
-                println params
+                //println params
 
                 if (bundler.validate(params)) {
                     bundler.execute(params, outputDir)

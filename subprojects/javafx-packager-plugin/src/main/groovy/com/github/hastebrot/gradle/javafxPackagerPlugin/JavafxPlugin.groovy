@@ -55,15 +55,13 @@ class JavafxPlugin implements Plugin<Project> {
             }
         }
 
-        //project.task([type: CreateJarTask, dependsOn: "jar"], CREATE_JAR_TASK) {
-        //
-        //}
+        def createJarTask = project.task(type: CreateJarTask, dependsOn: "jar", CREATE_JAR_TASK)
+        //createJarTask.dependsOn = [mainSourceSet.jarTaskName]
 
-        def createJarTask = project.tasks.replace(CREATE_JAR_TASK, CreateJarTask)
+        def deployTask = project.task(type: DeployTask, dependsOn: CREATE_JAR_TASK, DEPLOY_TASK)
 
         project.afterEvaluate {
             def mainSourceSet = this.project.sourceSets["main"] as SourceSet
-            createJarTask.dependsOn = [mainSourceSet.jarTaskName]
 
             def javafxConfig = this.project.extensions.getByName(JAVAFX_CONFIG) as JavafxConfig
             createJarTask.mainClass = javafxConfig.mainClass
@@ -79,8 +77,6 @@ class JavafxPlugin implements Plugin<Project> {
 
             }
         }
-
-        def deployTask = this.project.tasks.replace(DEPLOY_TASK, DeployTask)
 
         this.project.afterEvaluate {
             def extensionParams = this.project.extensions.getByName(JAVAFX_CONFIG) as JavafxConfig

@@ -1,4 +1,4 @@
-# gradle-javafx
+# gradle-javafx [![Build Status](https://travis-ci.org/hastebrot/gradle-javafx.svg?branch=master)](https://travis-ci.org/hastebrot/gradle-javafx)
 
 Gradle plugins for JavaFX.
 

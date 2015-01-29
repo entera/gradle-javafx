@@ -15,9 +15,11 @@ public class DemoSimpleApplication extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Pane sceneRoot = new StackPane(new Label(getClass().getSimpleName()));
+        String className = getClass().getSimpleName();
+        Pane sceneRoot = new StackPane(new Label(className));
         Scene scene = new Scene(sceneRoot, 400, 400);
         stage.setScene(scene);
+        stage.setTitle(className);
         stage.show();
     }
 

@@ -6,7 +6,7 @@ import com.github.hastebrot.gradle.javafxPackagerPlugin.task.DeployTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPlugin
-import org.gradle.api.tasks.SourceSet
+import org.gradle.api.tasks.SourceSetContainer
 
 class JavafxPlugin implements Plugin<Project> {
 
@@ -24,6 +24,10 @@ class JavafxPlugin implements Plugin<Project> {
     //---------------------------------------------------------------------------------------------
 
     private Project project
+    private SourceSetContainer sourceSets
+
+    private CreateJarTask createJarTask
+    private DeployTask deployTask
 
     //---------------------------------------------------------------------------------------------
     // METHODS.
@@ -31,8 +35,17 @@ class JavafxPlugin implements Plugin<Project> {
 
     void apply(Project project) {
         this.project = project
+
+        // Apply JavaPlugin to ensure that the source sets container and jar task are available.
+        this.project.plugins.apply(JavaPlugin)
+        this.sourceSets = this.project.sourceSets
+
         this.registerExtensions()
         this.registerTasks()
+
+        this.project.afterEvaluate {
+            this.configureTasks()
+        }
     }
 
     //---------------------------------------------------------------------------------------------
@@ -44,46 +57,41 @@ class JavafxPlugin implements Plugin<Project> {
     }
 
     private void registerTasks() {
-        this.project.plugins.apply(JavaPlugin)
-
-        this.project.sourceSets {
-            "package" {
-                resources {
-                    srcDir "src/deploy/package"
-                    srcDir "src/deploy/resources"
-                }
+        def mainSourceSet = this.sourceSets["main"]
+        def packageSourceSet = this.sourceSets.create("package") {
+            resources {
+                srcDir "src/deploy/package"
+                srcDir "src/deploy/resources"
             }
         }
 
-        def createJarTask = project.task(type: CreateJarTask, dependsOn: "jar", CREATE_JAR_TASK)
-        //createJarTask.dependsOn = [mainSourceSet.jarTaskName]
+        def javaJarTask = this.project.tasks.getByName(mainSourceSet.jarTaskName)
 
-        def deployTask = project.task(type: DeployTask, dependsOn: CREATE_JAR_TASK, DEPLOY_TASK)
+        this.createJarTask = this.project.task(type: CreateJarTask, CREATE_JAR_TASK) as CreateJarTask
+        this.createJarTask.dependsOn = [javaJarTask.name]
 
-        project.afterEvaluate {
-            def mainSourceSet = this.project.sourceSets["main"] as SourceSet
+        this.deployTask = this.project.task(type: DeployTask, DEPLOY_TASK) as DeployTask
+        this.deployTask.dependsOn = [CREATE_JAR_TASK]
+    }
 
-            def javafxConfig = this.project.extensions.getByName(JAVAFX_CONFIG) as JavafxConfig
-            createJarTask.mainClass = javafxConfig.mainClass
+    private void configureTasks() {
+        def javafxConfig = this.project.extensions.getByName(JAVAFX_CONFIG) as JavafxConfig
 
-            //File libsDir = new File(project.buildDir, "libs")
-            //createJarTask.jarFile = project.file(project.fileTree(libsDir).singleFile)
-            //createJarTask.classpath = project.files(project.fileTree(libsDir).files)
+        def mainSourceSet = this.sourceSets["main"]
+        def packageSourceSet = this.sourceSets["package"]
 
-            project.configure(createJarTask) {
-                def javaJarTask = project.tasks.getByName(mainSourceSet.jarTaskName)
-                jarFile = javaJarTask.archivePath
-                classpath = mainSourceSet.compileClasspath
+        def javaJarTask = this.project.tasks.getByName(mainSourceSet.jarTaskName)
 
-            }
+        this.project.configure(this.createJarTask) {
+            this.createJarTask.mainClass = javafxConfig.mainClass
+
+            this.createJarTask.jarFile = javaJarTask.archivePath
+            this.createJarTask.classpath = mainSourceSet.compileClasspath
         }
 
-        this.project.afterEvaluate {
-            def extensionParams = this.project.extensions.getByName(JAVAFX_CONFIG) as JavafxConfig
-            deployTask.mainClass = extensionParams.mainClass
-
-            SourceSet sourceSet = this.project.sourceSets["package"]
-            deployTask.distributionsRootDir = sourceSet.output.resourcesDir
+        this.project.configure(this.deployTask) {
+            this.deployTask.mainClass = javafxConfig.mainClass
+            this.deployTask.distributionsRootDir = packageSourceSet.output.resourcesDir
         }
     }
 

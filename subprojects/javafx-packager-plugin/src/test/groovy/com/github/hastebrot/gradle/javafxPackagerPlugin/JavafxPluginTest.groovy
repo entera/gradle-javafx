@@ -28,7 +28,7 @@ class JavafxPluginTest {
         def builder = ProjectBuilder.builder()
         //builder.withProjectDir()
         project = builder.build()
-        project.apply(plugin: "com.github.hastebrot.gradle.javafxDeployPlugin")
+        project.apply(plugin: "javafx-packager-plugin")
     }
 
     //---------------------------------------------------------------------------------------------

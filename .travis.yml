@@ -1,0 +1,6 @@
+language: java
+script: ./gradlew build
+jdk:
+  - oraclejdk8
+before_install:
+  - chmod +x gradlew

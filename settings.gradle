@@ -1,8 +1,11 @@
-include "subprojects/demo-simple-application"
-include "subprojects/javafx-packager-plugin"
-
+// name of root project.
 rootProject.name = "gradle-javafx"
 
+// list of subprojects.
+include "javafx-application-demo"
+include "javafx-packager-plugin"
+
+// build files of subprojects.
 rootProject.children.each { project ->
     def projectDir = new File(project.name)
     project.name = projectDir.name

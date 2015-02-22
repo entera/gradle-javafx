@@ -1,23 +1,49 @@
+// task to add gradle wrapper files.
 task wrapper(type: Wrapper) {
-    gradleVersion = "2.2.1"
+    gradleVersion = "2.3"
 }
 
-task versions << {
+// task to print gradle and groovy versions.
+task printVersions << {
     println "Gradle version: " + project.gradle.gradleVersion
     println "Groovy version: " + GroovySystem.version
 }
 
+allprojects { project ->
+    // task to create main and test source directories.
+    task createSourceDirs << {
+        if (project != rootProject) {
+            sourceSets*.allSource.srcDirs*.each { it.mkdirs() }
+            sourceSets*.resources.srcDirs*.each { it.mkdirs() }
+        }
+    }
+}
+
 subprojects {
+    // provide java configurations and tasks.
     apply plugin: "java"
 
-    task createSourceSets << { Task task ->
-        task.project.sourceSets*.allSource.srcDirs*.each { it.mkdirs() }
-        task.project.sourceSets*.resources.srcDirs*.each { it.mkdirs() }
+    // source code compatible to java 8.
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    // maven repositories for dependencies.
+    repositories {
+        if (project.hasProperty("useMavenLocal")) {
+            mavenLocal()
+        }
+        jcenter()
     }
 
+    // task to print configuration names.
     task printConfigNames << {
         for (configuration in configurations) {
             println configuration.name
         }
+    }
+
+    // configure javadoc task.
+    javadoc {
+        options.addStringOption("Xdoclint:none", "-quiet")
     }
 }

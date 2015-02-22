@@ -1,6 +1,6 @@
-# gradle-javafx [![Build Status](https://travis-ci.org/hastebrot/gradle-javafx.svg?branch=master)](https://travis-ci.org/hastebrot/gradle-javafx)
+# gradle-javafx [![Build Status](https://travis-ci.org/entera/gradle-javafx.svg?branch=master)](https://travis-ci.org/entera/gradle-javafx)
 
-Gradle plugins for JavaFX.
+Gradle plugins for JavaFX. &mdash; https://github.com/entera/gradle-javafx
 
 
 ## Status
